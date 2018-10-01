@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="47a95008-183a-4d5d-aace-af9096f347d8" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" />
+	</http:listener-config>
+	<flow name="maven-plugin-projectFlow" doc:id="c5ca12ca-56f7-49d8-803d-2f4ad6dd3d87" >
+		<http:listener doc:name="Listener" doc:id="890649b2-27f5-4bed-bb61-a7ba1ea8dd6b" config-ref="HTTP_Listener_config" path="/plugin/maven"/>
+		<logger level="INFO" doc:name="Logger" doc:id="ba271718-6fc8-4cf0-9178-c4fa18025413" message="#[payload]" category="maven-pluging-project"/>
+		<ee:transform doc:name="Transform Message" doc:id="19a033fb-07e3-466b-a3d3-6e6ffaddf9c3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
