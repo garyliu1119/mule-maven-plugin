@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>fea874ca-11d9-4779-b1ce-90d49f738259</groupId>
+	<groupId>d4cfba22-f481-4993-96f4-3d5373fb03fa</groupId>
 	<artifactId>mule-maven-plugin</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.6</version>
 	<packaging>mule-application</packaging>
 
 	<name>mule-maven-plugin</name>
@@ -13,15 +12,19 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<mule.maven.plugin.version>3.2.3</mule.maven.plugin.version>
+		<mule.maven.plugin.version>3.4.1</mule.maven.plugin.version>
+		<maven.properties>src/main/resources/mule.rtf.deploy.properties</maven.properties>
+	
 		<anypoint.uri>https://anypoint.mulesoft.com</anypoint.uri>
 		<anypoint.provider>MC</anypoint.provider>
-		<deployment.environment>QA</deployment.environment>
-<!-- 		<deployment.target>qa-azure-rtf</deployment.target> -->
-		<app.runtime>4.1.4</app.runtime>
+		<deployment.environment>prod</deployment.environment>
+		<deployment.target>nisource-prod-hammond-rtf</deployment.target>
+		<app.runtime>4.3.0</app.runtime>
 		<app.name>gary-deployment</app.name>
-		<app.cores>100m</app.cores>
-		<app.memory>500Mi</app.memory>
+		<app.cores>20m</app.cores>
+		<app.memory>700Mi</app.memory> 
+		<app.domain>api.nisource.net</app.domain>
+
 	</properties>
 
 	<build>
@@ -40,10 +43,17 @@
 						<muleVersion>${app.runtime}</muleVersion>
 						<server>ExchangeRepository</server>
 						<applicationName>${app.name}</applicationName>
+						<businessGroup>NiSource\NiSource BG</businessGroup>
+						<properties>
+							<javax.net.debug>ssl</javax.net.debug>
+							<https.private.port>8081</https.private.port>
+						</properties>
 						<deploymentSettings>
 							<replicationFactor>${deployment.replica}</replicationFactor>
 							<cpuReserved>${app.cores}</cpuReserved>
+							<cpuMax>3700m</cpuMax>
 							<memoryReserved>${app.memory}</memoryReserved>
+							<publicUrl>${app.domain}/${app.name}</publicUrl>
 						</deploymentSettings>
 					</runtimeFabricDeployment>
 					<classifier>mule-application</classifier>
@@ -68,6 +78,21 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<version>${mule.maven.plugin.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+				</configuration>
+			</plugin>			
 		</plugins>
 	</build>
 
@@ -81,18 +106,18 @@
 	</distributionManagement>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-http-connector</artifactId>
-			<version>1.2.1</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-sockets-connector</artifactId>
-			<version>1.1.1</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-http-connector</artifactId>
+            <version>1.5.19</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-sockets-connector</artifactId>
+            <version>1.2.0</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
 	</dependencies>
 
 	<repositories>

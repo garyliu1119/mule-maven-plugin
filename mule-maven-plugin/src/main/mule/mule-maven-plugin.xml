@@ -18,6 +18,7 @@ output application/json
 ---
 {
 	name: 'Gary Liu',
+	app: app.name,
 	prop: System::getProperties()
 }]]></ee:set-payload>
 			</ee:message>
