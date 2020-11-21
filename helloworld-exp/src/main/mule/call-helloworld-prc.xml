@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="e4595ca1-67f6-4dce-a7da-687bd3701298" >
+		<http:request-connection protocol="HTTPS" host="${process.host}" port="443"/>
+	</http:request-config>
+	<flow name="call-helloworld-prcFlow" doc:id="b0c1e08f-8335-4a9b-9281-0359493273f5" >
+		<ee:transform doc:name="Transform Message" doc:id="98096e02-4780-4ca8-ae09-09a3198680f9" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"name": "Gary Liu"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request" doc:id="83da7126-5780-4855-bc14-335ff9d54574" config-ref="HTTP_Request_configuration" path="${process.path}" outputMimeType="application/json" responseTimeout="30000"/>
+		<logger level="INFO" doc:name="Logger" doc:id="7d4c1986-ff4c-4f15-9d18-3114f5522e0f" message="#[payload]" category="HELLO-WORLD-EXP"/>
+	</flow>
+</mule>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+
+<!-- 
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="134ecec1-e1db-4a46-adf4-f9344da33e86">
+		<http:listener-connection host="0.0.0.0" port="8092" protocol="HTTPS">
+			<tls:context >
+				<tls:key-store type="pkcs12" path="certs/keyStore.p12" keyPassword="nisource" password="nisource" />
+			</tls:context>
+		</http:listener-connection>
+	</http:listener-config>
+ -->
+	<tls:context name="TLS_Context" doc:name="TLS Context" doc:id="9a6a2dbd-6524-4221-98cd-68db0171a6d7" >
+		<tls:key-store type="pkcs12" path="certs/keyStore.p12" keyPassword="nisource" password="nisource" />
+	</tls:context>
+	
+	<http:listener-config name="HTTP_Listener_config_TLS_Contex" doc:name="HTTP Listener config" doc:id="2c1a868d-16f9-4070-b8ac-6699e0dae93c" >
+		<http:listener-connection protocol="HTTPS" host="${https.private.host}" port="${https.private.port}" tlsContext="TLS_Context" />
+	</http:listener-config>
+	
+	<configuration-properties doc:name="Configuration properties" doc:id="86a011a1-b951-43f6-8c4b-4aae77c28969" file="nosecure/mule.${mule.env}.yaml" />
+	
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="09d3787e-7b0b-4d9f-aab5-917c8f003526" file="secure/mule.${mule.env}.secure.yaml" key="${encryption.key}" />
+
+	<global-property doc:name="Global Property" doc:id="7e2e146a-eab6-4298-b6bd-4d87502795ec" name="mule.env" value="dev" />
+	<global-property doc:name="Global Property" doc:id="446855ae-9d11-4803-937f-b2b1432b1603" name="encryption.key" value="1234567890123456" />
+</mule>
