@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mycompany</groupId>
+	<groupId>d4cfba22-f481-4993-96f4-3d5373fb03fa</groupId>
 	<artifactId>helloworld-exp</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>mule-application</packaging>
 
 	<name>helloworld-exp</name>
@@ -17,8 +17,11 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 
 		<app.runtime>4.3.0</app.runtime>
-		<mule.maven.plugin.version>3.3.5</mule.maven.plugin.version>
+		<mule.maven.plugin.version>3.4.1</mule.maven.plugin.version>
 		<munit.version>2.2.5</munit.version>
+		
+		<maven.properties>src/main/resources/deploy/hammond.rtf.deploy.properties</maven.properties>
+		
 	</properties>
 
 	<build>
@@ -33,13 +36,19 @@
 					<cloudHubDeployment>
 						<uri>${anypoint.uri}</uri>
 						<muleVersion>${app.runtime}</muleVersion>
-						<server>ExchangeRepository</server>						
+<!-- 						
+						<server>ExchangeRepository</server>		
+ -->					
+ 						<connectedAppClientId>506b8b0b2c394574ad608aa4391ccab2</connectedAppClientId>
+ 						<connectedAppClientSecret>87F021e101164301b62959212D197767</connectedAppClientSecret>	
+ 						<connectedAppGrantType>client_credentials</connectedAppGrantType>				
 						<applicationName>${app.name}</applicationName>
 						<environment>${deployment.environment}</environment>
-						<busineeGroup>${app.businessGroup}</busineeGroup>
+						<businessGroup>NiSource\NiSource BG</businessGroup>
 						<region>${app.region}</region>
 						<workers>${app.workers}</workers>
 						<workerType>${app.workerType}</workerType>
+						<objectStoreV2>true</objectStoreV2>
 						<properties>
 							<mule.env>${deployment.environment}</mule.env>
 							<encryptionKey>${app.encryptionKey}</encryptionKey>
@@ -118,6 +127,15 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>ExchangeRepository</id>
+			<name>Corporate Repository</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v1/organizations/${groupId}/maven</url>
+			<layout>default</layout>
+		</repository>
+	</distributionManagement>
+	
 	<dependencies>
         <dependency>
             <groupId>org.mule.connectors</groupId>
@@ -143,6 +161,12 @@
             <version>2.2.5</version>
             <classifier>mule-plugin</classifier>
             <scope>test</scope>
+        </dependency>
+    	<dependency>
+            <groupId>com.mulesoft.modules</groupId>
+            <artifactId>mule-secure-configuration-property-module</artifactId>
+            <version>1.2.3</version>
+            <classifier>mule-plugin</classifier>
         </dependency>
     </dependencies>
 

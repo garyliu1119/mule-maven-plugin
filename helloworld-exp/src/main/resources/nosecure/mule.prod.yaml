@@ -8,4 +8,4 @@ http:
     port: "8091"
 process:
   host: "api.nisource.net"
-  path: "/nisrouce-helloworld-prc/api/hello"
+  path: "/nisrouce-helloworld-prc-v1/api/hello"
