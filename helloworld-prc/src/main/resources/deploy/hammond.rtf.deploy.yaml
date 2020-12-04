@@ -1,0 +1,20 @@
+anypoint:
+  uri: https://anypoint.mulesoft.com
+  provier: MC
+  clientId: 5b2f8ff552a04aef91a91687f8fe614e
+  clientSecret: 3C9A8F8810b24Fbf895636487a05f1d1
+deployment:
+  environment: prod
+  target: nisource-prod-hammond-rtf
+  replica: 1
+app:
+  domain: api.nisource.net
+  runtime: 4.3.0
+  name: nisource-helloworld-prc-v1
+  cores: 20m
+  memory: 900Mi
+  cpuMax: 3700m
+  encryptionKey: 9999888877776666
+connectedApp:
+  clientId: 506b8b0b2c394574ad608aa4391ccab2
+  clientSecret: 87F021e101164301b62959212D197767
