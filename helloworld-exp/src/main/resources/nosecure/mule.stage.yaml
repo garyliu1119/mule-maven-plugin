@@ -1,0 +1,11 @@
+https:
+  private:
+    host: "0.0.0.0"
+    port: "8092"
+http:
+  private:
+    host: "0.0.0.0"
+    port: "8091"
+process:
+  host: "stageapi.nisource.net"
+  path: "/nisource-helloworld-prc-v1-stage/api/hello"
