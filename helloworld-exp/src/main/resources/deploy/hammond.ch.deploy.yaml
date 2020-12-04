@@ -1,0 +1,18 @@
+anypoint:
+  uri: https://anypoint.mulesoft.com
+deployment:
+  environment: prod
+app:
+  domain: api.nisource.net
+  runtime: 4.3.0
+  name: nisource-helloworld-exp-v1
+  workerType: MICRO
+  region: us-east-2
+  workers: 1
+  businessGroup: 'NiSource\NiSource BG'
+  encryptionKey: 9999888877776666
+  clientId: 5b2f8ff552a04aef91a91687f8fe614e
+  clientSecret: 3C9A8F8810b24Fbf895636487a05f1d1
+connectedApp:
+  clientId: 506b8b0b2c394574ad608aa4391ccab2
+  clientSecret: 87F021e101164301b62959212D197767
